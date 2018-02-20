@@ -6,31 +6,31 @@
         <div class="col-md-6 col-md-offset-3">
           <div class="form-group">
             <label for="annual">Annual salary</label>
-            <input  v-on:keyup="calculate('year')" id="year" v-model="year" type="text" class="form-control">
+            <input  v-on:keyup="calculate('year')" id="year" v-model="year" type="text" class="form-control" money>
           </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <div class="form-group">
             <label for="annual">Monthly wage</label>
-            <input  v-on:keyup="calculate('month')" id="month" v-model="month" type="text" class="form-control">
+            <input  v-on:keyup="calculate('month')" id="month" v-model="month" type="text" class="form-control" money>
           </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <div class="form-group">
             <label for="annual">Weekly wage</label>
-            <input v-on:keyup="calculate('week')"  id="week" v-model="week" type="text" class="form-control">
+            <input v-on:keyup="calculate('week')"  id="week" v-model="week" type="text" class="form-control" money>
           </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <div class="form-group">
             <label for="annual">Daily wage</label>
-            <input  v-on:keyup="calculate('day')" id="day" v-model="day" type="text" class="form-control">
+            <input  v-on:keyup="calculate('day')" id="day" v-model="day" type="text" class="form-control" money>
           </div>
         </div>
         <div class="col-md-6 col-md-offset-3">
           <div class="form-group">
             <label for="annual">Hourly wage</label>
-            <input  v-on:keyup="calculate('hour')" id="hour" v-model="hour" type="text" class="form-control">
+            <input  v-on:keyup="calculate('hour')" id="hour" v-model="hour" type="text" class="form-control" money>
           </div>
         </div>
       </div>
@@ -45,9 +45,9 @@ export default {
       conf: {
         numWeeks: 52,
         numHoursWeek: 40,
-        numYear:1,
-        numMonths:12,
-        numDays:360,
+        numYear: 1,
+        numMonths: 12,
+        numDays: 360
       },
       year: null,
       month: null,
@@ -77,19 +77,32 @@ export default {
       }
     },
     calculateByYear: function() {
-      this.month = this.calc(this.year, 12);
-      this.week = this.calc(this.year, this.conf.numWeeks);
-      this.day = this.calc(this.year, 12);
-      this.hour = this.calc(this.year, 12);
+     this.hour = this.calc(this.year, 1/(this.conf.numMonths*(this.conf.numWeeks / this.conf.numMonths)*this.conf.numHoursWeek));
+     this.calculateAllByHour('year');
+    },
+    calculateByMonth: function() {
+     this.hour = this.calc(this.month, 1/(this.conf.numWeeks / this.conf.numMonths)*this.conf.numHoursWeek);
+     this.calculateAllByHour('month');
     },
     calculateByHour: function() {
-      this.year = this.calc(this.hour, 12);
-      this.month = this.calc(this.hour, 12);
-      this.week = this.calc(this.hour, this.conf.numWeeks);
-      this.day = this.calc(this.hour, 12);
+     this.calculateAllByHour();
+    },
+    calculateAllByHour:function(exclude){
+      if(exclude!=='day'){
+        this.day = this.calc(this.hour, this.conf.numHoursWeek / 5);
+      }
+      if(exclude!=='week'){
+        this.week = this.calc(this.hour, this.conf.numHoursWeek);
+      }
+      if(exclude!=='month'){
+        this.month = this.calc(this.week, (this.conf.numWeeks / this.conf.numMonths));
+      }
+      if(exclude!=='year'){
+        this.year = this.calc(this.month, this.conf.numMonths);
+      }
     },
     calc: function(value, ratio) {
-      return (value*ratio).toFixed(2);
+      return (value * ratio);
     }
   }
 };
