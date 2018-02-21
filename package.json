@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-the-mask": "^0.11.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
@@ -64,7 +65,7 @@
     "style-loader": "^0.20.2",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
-    "vue-currency-filter": "^2.1.0",
+    "v-money": "^0.8.1",
     "vue-jest": "^1.0.2",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
