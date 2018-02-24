@@ -235,46 +235,44 @@ export default {
       }
     },
     calculateByYear: function() {
-      this.hour = this.calc( this.year, 1 / (this.conf.numWeeks * this.conf.numHoursWeek) );
-      this.calculateAllByHour("year");
+      this.calculateAllByYear();
     },
     calculateByMonth: function() {
-      this.hour = this.calc( this.month, 1 / (this.conf.numWeeks / this.conf.numMonths * this.conf.numHoursWeek) );
-      this.calculateAllByHour("month");
+      this.year = this.calc( this.month, this.conf.numMonths);
+      this.year = this.calc( this.month, this.conf.numWeeks / this.conf.numMonths * this.conf.numHoursWeek );
+      this.calculateAllByYear("month");
     },
     calculateByBiweek: function() {
-      this.hour = this.calc(this.biweek, 1 / (this.conf.numHoursWeek * 2));
-      this.calculateAllByHour("biweek");
+      this.year = this.calc(this.biweek, this.conf.numWeeks / 2);
+      this.calculateAllByYear("biweek");
     },
     calculateByWeek: function() {
-      this.hour = this.calc(this.week, 1 / this.conf.numHoursWeek);
-      this.calculateAllByHour("week");
+      this.year = this.calc(this.week, this.conf.numWeeks);
+      this.calculateAllByYear("week");
     },
     calculateByDay: function() {
-      this.hour = this.calc( this.day, 1 / (this.conf.numHoursWeek / this.conf.numDayWeek) );
-      this.calculateAllByHour("day");
+      this.year = this.calc( this.day,  this.conf.numDayWeek * this.conf.numWeeks);
+      this.calculateAllByYear("day");
     },
     calculateByHour: function() {
-      this.calculateAllByHour();
+      this.year = this.calc( this.hour, this.conf.numHoursWeek  * this.conf.numWeeks);
+      this.calculateAllByYear("hour");
     },
-    calculateAllByHour: function(exclude) {
+    calculateAllByYear: function(exclude) {
+      if (exclude !== "hour") {
+        this.hour = this.calc(this.year, this.getInverse(this.conf.numWeeks* this.conf.numHoursWeek ));
+      }
       if (exclude !== "day") {
-        this.day = this.calc(this.hour, this.conf.numHoursWeek / 5);
+        this.day = this.calc(this.year, this.getInverse(this.conf.numWeeks*this.conf.numDayWeek));
       }
       if (exclude !== "week") {
-        this.week = this.calc(this.hour, this.conf.numHoursWeek);
+        this.week = this.calc(this.year, this.getInverse(this.conf.numWeeks));
       }
       if (exclude !== "biweek") {
-        this.biweek = this.calc(this.hour, this.conf.numHoursWeek * 2);
+        this.biweek = this.calc(this.year, this.getInverse(this.conf.numWeeks / 2));
       }
       if (exclude !== "month") {
-        this.month = this.calc(
-          this.week,
-          this.conf.numWeeks / this.conf.numMonths
-        );
-      }
-      if (exclude !== "year") {
-        this.year = this.calc(this.month, this.conf.numMonths);
+        this.month = this.calc( this.year, this.getInverse(this.conf.numMonths));
       }
       this.calculateAllTaxes();
       this.calculateAllDeductions();
@@ -285,7 +283,7 @@ export default {
       this.deduction.week = this.calcDeduction(this.week);
       this.deduction.biweek = this.calcDeduction(this.biweek);
       this.deduction.month = this.calcDeduction(this.month);
-      this.deduction.year = this.calcDeduction(this.year);
+      this.deduction.year = this.calcDeduction(this.year); 
     },
     calculateAllTaxes() {
       this.after.hour = this.calcTax(this.hour);
@@ -309,6 +307,9 @@ export default {
     },
     getTax: function() {
       return this.conf.tax / 100;
+    },
+    getInverse:function(value){
+        return 1 / value;
     }
   }
 };
