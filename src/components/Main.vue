@@ -1,96 +1,163 @@
 <template>
-  <div class="main">
-    <div class="container">
-      <section>
-        <div class="row">
-          <!-- <h1>Salary Calculator</h1> -->
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="annual">Annual salary</label>
-              <input v-money="money" v-on:keyup="calculate('year')" id="year" v-model.lazy="year" type="text" class="form-control" money>
+    <div class="main">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="tax">Tax %</label>
+                                <input  v-on:keyup="updateConf()" id="tax" v-model="conf.tax" type="text" class="form-control" min="0" max="100" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="numWeeks">Weeks per year</label>
+                                <input  v-on:keyup="updateConf()" id="numWeeks" v-model="conf.numWeeks" type="text" class="form-control" min="0" max="100" >
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="numWeeks">Hours per week</label>
+                                <input  v-on:keyup="updateConf()" id="numHoursWeek" v-model="conf.numHoursWeek" type="text" class="form-control" min="0" max="100" >
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="annual">Monthly wage</label>
-              <input v-money="money" v-on:keyup="calculate('month')" id="month" v-model.lazy="month" type="text" class="form-control" money>
-          </div>
-          </div>
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="annual">Biweekly wage</label>
-              <input v-money="money" v-on:keyup="calculate('biweek')" id="biweek" v-model.lazy="biweek" type="text" class="form-control" money>
+            <div class="row">
+                <div class="col-md-4">
+                    <section>
+                        <div class="row">
+                            <!-- <h1>Salary Calculator</h1> -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Annual salary</label>
+                                    <input v-money="money" v-on:keyup="calculate('year')" id="year" v-model.lazy="year" type="text" class="form-control" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Monthly wage</label>
+                                    <input v-money="money" v-on:keyup="calculate('month')" id="month" v-model.lazy="month" type="text" class="form-control" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Biweekly wage</label>
+                                    <input v-money="money" v-on:keyup="calculate('biweek')" id="biweek" v-model.lazy="biweek" type="text" class="form-control" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Weekly wage</label>
+                                    <input v-money="money" v-on:keyup="calculate('week')" id="week" v-model.lazy="week" type="text" class="form-control" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Daily wage</label>
+                                    <input   v-money="money" v-on:keyup="calculate('day')" id="day" v-model.lazy="day" type="text" class="form-control" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Hourly wage</label>
+                                    <input  v-money="money" v-on:keyup="calculate('hour')" id="hour" v-model.lazy="hour" type="text" class="form-control" money>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-4">
+                    <section>
+                        <div class="row">
+                            <!-- <h1>Deductions</h1> -->
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Annual deduction</label>
+                                    <input v-money="money" id="deduction.year"  v-model.lazy="deduction.year"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Monthly deduction</label>
+                                    <input v-money="money" id="deduction.month"  v-model.lazy="deduction.month"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Biweekly deduction</label>
+                                    <input v-money="money"  id="deduction.biweek"  v-model.lazy="deduction.biweek"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Weekly deduction</label>
+                                    <input v-money="money"  id="deduction.week"  v-model.lazy="deduction.week"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Daily deduction</label>
+                                    <input   v-money="money" id="deduction.day"  v-model.lazy="deduction.day"  type="text" class="form-control"  readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Hourly deduction</label>
+                                    <input  v-money="money"  id="deduction.hour"  v-model.lazy="deduction.hour"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-md-4">
+                    <section>            
+                        <div class="row">                            
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Annual salary (after tax)</label>
+                                    <input v-money="money" id="after.year"  v-model.lazy="after.year"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Monthly wage (after tax)</label>
+                                    <input v-money="money" id="after.month"  v-model.lazy="after.month"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Biweekly wage (after tax)</label>
+                                    <input v-money="money"  id="after.biweek"  v-model.lazy="after.biweek"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Weekly wage (after tax)</label>
+                                    <input v-money="money"  id="after.week"  v-model.lazy="after.week"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Daily wage (after tax)</label>
+                                    <input   v-money="money" id="after.day"  v-model.lazy="after.day"  type="text" class="form-control"  readonly="true" money>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="annual">Hourly wage (after tax)</label>
+                                    <input  v-money="money"  id="after.hour"  v-model.lazy="after.hour"  type="text" class="form-control" readonly="true" money>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
-          </div>
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="annual">Weekly wage</label>
-              <input v-money="money" v-on:keyup="calculate('week')" id="week" v-model.lazy="week" type="text" class="form-control" money>
-            </div>
-          </div>
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="annual">Daily wage</label>
-              <input   v-money="money" v-on:keyup="calculate('day')" id="day" v-model.lazy="day" type="text" class="form-control" money>
-            </div>
-          </div>
-          <div class="col-md-6 col-md-offset-3">
-            <div class="form-group">
-              <label for="annual">Hourly wage</label>
-              <input  v-money="money" v-on:keyup="calculate('hour')" id="hour" v-model.lazy="hour" type="text" class="form-control" money>
-            </div>
-          </div>
+
         </div>
-      </section>
-      <section>
-        <div class="row">
-        <!-- <h1>Salary Calculator</h1> -->
-          <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Tax %</label>
-                <input  v-on:keyup="updateConf()" id="tax" v-model="conf.tax" type="text" class="form-control" min="0" max="100" >
-              </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Annual salary (after tax)</label>
-                <input v-money="money" id="year_after"  v-model.lazy="year_after"  type="text" class="form-control" readonly="true" money>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Monthly wage (after tax)</label>
-                <input v-money="money" id="month_after"  v-model.lazy="month_after"  type="text" class="form-control" readonly="true" money>
-            </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Biweekly wage (after tax)</label>
-                <input v-money="money"  id="biweek_after"  v-model.lazy="biweek_after"  type="text" class="form-control" readonly="true" money>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Weekly wage (after tax)</label>
-                <input v-money="money"  id="week_after"  v-model.lazy="week_after"  type="text" class="form-control" readonly="true" money>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Daily wage (after tax)</label>
-                <input   v-money="money" id="day_after"  v-model.lazy="day_after"  type="text" class="form-control"  readonly="true" money>
-              </div>
-            </div>
-            <div class="col-md-6 col-md-offset-3">
-              <div class="form-group">
-                <label for="annual">Hourly wage (after tax)</label>
-                <input  v-money="money"  id="hour_after"  v-model.lazy="hour_after"  type="text" class="form-control" readonly="true" money>
-              </div>
-            </div>
-          </div>
-      </section>
     </div>
-  </div> 
 </template>
 <script>
 import { VMoney } from "v-money";
@@ -114,12 +181,22 @@ export default {
       biweek: null,
       day: null,
       hour: null,
-      year_after: null,
-      month_after: null,
-      week_after: null,
-      biweek_after: null,
-      day_after: null,
-      hour_after: null,
+      after: {
+        year_after: null,
+        month_after: null,
+        week_after: null,
+        biweek_after: null,
+        day_after: null,
+        hour_after: null,
+        year_after: null
+      },
+      deduction: {
+        month_after: null,
+        week_after: null,
+        biweek_after: null,
+        day_after: null,
+        hour_after: null
+      },
       money: {
         decimal: ".",
         thousands: ",",
@@ -174,10 +251,7 @@ export default {
       this.calculateAllByHour("week");
     },
     calculateByDay: function() {
-      this.hour = this.calc(
-        this.day,
-        1 / (this.conf.numHoursWeek / this.conf.numDayWeek)
-      );
+      this.hour = this.calc( this.day, 1 / (this.conf.numHoursWeek / this.conf.numDayWeek) );
       this.calculateAllByHour("day");
     },
     calculateByHour: function() {
@@ -194,25 +268,47 @@ export default {
         this.biweek = this.calc(this.hour, this.conf.numHoursWeek * 2);
       }
       if (exclude !== "month") {
-        this.month = this.calc( this.week, this.conf.numWeeks / this.conf.numMonths );
+        this.month = this.calc(
+          this.week,
+          this.conf.numWeeks / this.conf.numMonths
+        );
       }
       if (exclude !== "year") {
         this.year = this.calc(this.month, this.conf.numMonths);
       }
-      var taxedHour = this.calcTax(this.hour);
-      this.day_tax = this.calc(taxedHour, this.conf.numHoursWeek / 5);
-      this.week_tax = this.calc(taxedHour, this.conf.numHoursWeek);
-      this.biweek_tax = this.calc(taxedHour, this.conf.numHoursWeek * 2);
-      this.month_tax = this.calc(this.calcTax(this.week), this.conf.numWeeks / this.conf.numMonths );
-      this.year_tax = this.calc(this.calcTax(this.month), this.conf.numMonths);
-
+      this.calculateAllTaxes();
+      this.calculateAllDeductions();
+    },
+    calculateAllDeductions() {
+      this.deduction.hour = this.calcDeduction(this.hour);
+      this.deduction.day = this.calcDeduction(this.day);
+      this.deduction.week = this.calcDeduction(this.week);
+      this.deduction.biweek = this.calcDeduction(this.biweek);
+      this.deduction.month = this.calcDeduction(this.month);
+      this.deduction.year = this.calcDeduction(this.year);
+    },
+    calculateAllTaxes() {
+      this.after.hour = this.calcTax(this.hour);
+      this.after.day = this.calcTax(this.day);
+      this.after.week = this.calcTax(this.week);
+      this.after.biweek = this.calcTax(this.biweek);
+      this.after.month = this.calcTax(this.month);
+      this.after.year = this.calcTax(this.year);
+    },
+    calcDeduction: function(wage) {
+      return this.calc(wage, this.getTax());
     },
     calcTax: function(wage) {
-      return wage * (1-(this.conf.tax / 100));
+      return this.calc(wage, 1 - this.getTax());
     },
     calc: function(value, ratio) {
-      var correctValue = value ? parseFloat(value.toString().replace(/[^0-9\\.]+/g, "")) : 0;
-      return  (correctValue * ratio).toFixed(2);
+      var correctValue = value
+        ? parseFloat(value.toString().replace(/[^0-9\\.]+/g, ""))
+        : 0;
+      return (correctValue * ratio).toFixed(2);
+    },
+    getTax: function() {
+      return this.conf.tax / 100;
     }
   }
 };
