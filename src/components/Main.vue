@@ -29,7 +29,6 @@
                 <div class="col-md-4">
                     <section>
                         <div class="row">
-                            <!-- <h1>Salary Calculator</h1> -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="annual">Annual salary</label>
@@ -72,7 +71,6 @@
                 <div class="col-md-4">
                     <section>
                         <div class="row">
-                            <!-- <h1>Deductions</h1> -->
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="annual">Annual deduction</label>
@@ -113,8 +111,8 @@
                     </section>
                 </div>
                 <div class="col-md-4">
-                    <section>            
-                        <div class="row">                            
+                    <section>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="annual">Annual salary (after tax)</label>
@@ -239,7 +237,6 @@ export default {
     },
     calculateByMonth: function() {
       this.year = this.calc( this.month, this.conf.numMonths);
-      this.year = this.calc( this.month, this.conf.numWeeks / this.conf.numMonths * this.conf.numHoursWeek );
       this.calculateAllByYear("month");
     },
     calculateByBiweek: function() {
@@ -283,7 +280,7 @@ export default {
       this.deduction.week = this.calcDeduction(this.week);
       this.deduction.biweek = this.calcDeduction(this.biweek);
       this.deduction.month = this.calcDeduction(this.month);
-      this.deduction.year = this.calcDeduction(this.year); 
+      this.deduction.year = this.calcDeduction(this.year);
     },
     calculateAllTaxes() {
       this.after.hour = this.calcTax(this.hour);
@@ -317,7 +314,6 @@ export default {
 /*
 check: https://www.omnicalculator.com/business/salary-to-hourly
  */
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
 
 </style>
