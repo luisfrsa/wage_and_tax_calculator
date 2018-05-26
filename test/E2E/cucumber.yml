@@ -1,0 +1,20 @@
+##YAML Template
+---
+#profiles
+default: -p html_report -p chrome -p env_qa
+ci: -p json_report -p chrome_headless -p env_qa
+qa: -p html_report -p chrome -p env_qa
+dev: -p chrome -p env_dev
+
+#reports
+html_report: --format pretty --format html --out=reports/features_report.html
+json_report: --format progress --format json --out=reports/features_report.json
+
+#browsers
+chrome: BROWSER=chrome
+chrome_headless: BROWSER=chrome_headless
+firefox: BROWSER=firefox
+
+#enviroments
+env_dev: ENVIRONMENT_TYPE=dev
+env_qa: ENVIRONMENT_TYPE=qa
