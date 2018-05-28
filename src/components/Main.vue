@@ -13,7 +13,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="numWeeks">Weeks per year</label>
-                                <input  v-on:keyup="updateConf()" id="numWeeks" v-model="conf.numWeeks" type="text" class="form-control" min="0" max="100" >
+                                <input  v-on:keyup="updateConf()" id="numWeeks" v-model="conf.numWeeks" type="text" packclass="form-control" min="0" max="100" >
                             </div>
                         </div>
                         <div class="col-md-4">
