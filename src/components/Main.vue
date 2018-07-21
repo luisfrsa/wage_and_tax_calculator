@@ -3,22 +3,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-<md-switch v-model="conf.display.year">Display year</md-switch>
-<md-switch v-model="conf.display.month">Display month</md-switch>
-<md-switch v-model="conf.display.week">Display week</md-switch>
-<md-switch v-model="conf.display.biweek">Display biweek</md-switch>
-<md-switch v-model="conf.display.day">Display day</md-switch>
-<md-switch v-model="conf.display.hour">Display hour</md-switch>
-                
-                
-                
-                
-
-                  <md-field>
+                <md-switch v-model="conf.display.year">Display year</md-switch>
+                <md-switch v-model="conf.display.month">Display month</md-switch>
+                <md-switch v-model="conf.display.week">Display week</md-switch>
+                <md-switch v-model="conf.display.biweek">Display biweek</md-switch>
+                <md-switch v-model="conf.display.day">Display day</md-switch>
+                <md-switch v-model="conf.display.hour">Display hour</md-switch>
+                <md-field>
                     <label>Type here!</label>
                     <md-input v-model="type"></md-input>
                     <span class="md-helper-text">Helper text</span>
-                    </md-field>
+                </md-field>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
